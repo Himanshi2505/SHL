@@ -26,39 +26,39 @@ class SHLScraper:
         soup = BeautifulSoup(response.content, "html.parser")
         assessment_links = []
         
-        # Try multiple approaches to find assessment links
         
-        # Look for links in a table structure (based on image 2)
+        
+        
         table_links = soup.select("table a") if soup.select("table") else []
         if table_links:
             assessment_links.extend(table_links)
         
-        # Look for links under any "Job Solutions" or similar headings
+        
         solutions_headers = soup.find_all(["h2", "h3", "h4"], string=lambda s: s and "Solution" in s)
         for header in solutions_headers:
-            # Get links within this section
+            
             section_links = header.find_next_siblings()
             for element in section_links:
                 links = element.find_all("a")
                 if links:
                     assessment_links.extend(links)
         
-        # Look for any links that have assessment-like URLs
+        
         catalog_links = soup.select("a[href*='/product-catalog/']")
         assessment_links.extend([link for link in catalog_links if link not in assessment_links])
         
-        # If we still don't have links, try to find all links that might be job assessments
+        
         if not assessment_links:
-            # Look for any links under the main container
+            
             main_content = soup.select_one("main") or soup.select_one(".main-content") or soup.select_one("#content") or soup
             potential_links = main_content.find_all("a")
             
-            # Filter for links that seem to be assessment solutions
+            
             assessment_links = [link for link in potential_links if link.get("href") and 
                                (re.search(r'solution|assessment|test', link.get("href"), re.IGNORECASE) or
                                 (link.text and re.search(r'solution|assessment|test', link.text, re.IGNORECASE)))]
         
-        # Make sure we have unique links
+        
         unique_links = []
         seen_hrefs = set()
         for link in assessment_links:
@@ -92,7 +92,7 @@ class SHLScraper:
         
         soup = BeautifulSoup(response.content, "html.parser")
         
-        # Extract assessment details
+        
         details = {
             "name": name,
             "url": url,
@@ -103,27 +103,27 @@ class SHLScraper:
             "test_type": "Unknown"
         }
         
-        # Look for Remote Testing indicator
+        
         remote_testing_elements = soup.find_all(string=lambda s: s and "Remote Testing" in s)
         for element in remote_testing_elements:
             parent = element.parent
             if parent:
-                # Check if there's a green checkmark or "Yes" nearby
+                
                 if "✓" in parent.text or "Yes" in parent.text or parent.find(["img", "i", "span"], class_=lambda c: c and ("check" in c or "yes" in c or "green" in c)):
                     details["remote_testing"] = "Yes"
                     break
         
-        # Look for Adaptive/IRT Support indicator
+        
         adaptive_elements = soup.find_all(string=lambda s: s and ("Adaptive" in s or "IRT" in s))
         for element in adaptive_elements:
             parent = element.parent
             if parent:
-                # Check if there's a green checkmark or "Yes" nearby
+                
                 if "✓" in parent.text or "Yes" in parent.text or parent.find(["img", "i", "span"], class_=lambda c: c and ("check" in c or "yes" in c or "green" in c)):
                     details["adaptive_irt"] = "Yes"
                     break
         
-        # Look for duration/assessment length
+        
         duration_patterns = [
             r"(\d+)\s*minutes",
             r"completion time.*?(\d+)",
@@ -133,7 +133,7 @@ class SHLScraper:
         ]
         
         for pattern in duration_patterns:
-            # Find all text nodes
+            
             for text_node in soup.find_all(text=True):
                 match = re.search(pattern, text_node.lower())
                 if match:
@@ -142,12 +142,12 @@ class SHLScraper:
             if details["duration"] != "Unknown":
                 break
         
-        # Look for test type
+        
         test_type_elements = soup.find_all(string=lambda s: s and "Test Type" in s)
         for element in test_type_elements:
             parent = element.parent
             if parent:
-                # Extract test type information
+                
                 test_type_text = parent.text.replace("Test Type:", "").strip()
                 if test_type_text:
                     details["test_type"] = test_type_text
@@ -172,7 +172,7 @@ class SHLScraper:
                 print(f"\nAssessment #{len(self.assessments)} details:")
                 print(json.dumps(details, indent=2))
             
-            # Be respectful with the server
+            
             time.sleep(2)
         
         return self.assessments
@@ -183,7 +183,7 @@ class SHLScraper:
             json.dump(self.assessments, f, indent=4)
         print(f"Data saved to {filename}")
 
-# Usage example
+
 if __name__ == "__main__":
     scraper = SHLScraper()
     scraper.scrape_all_assessments()
