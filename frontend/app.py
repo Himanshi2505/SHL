@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-st.title("🔍 SHL Assessment Recommendation System")
+st.title("SHL Assessment Recommendation System")
 
 query = st.text_area("Enter job description or query")
 
