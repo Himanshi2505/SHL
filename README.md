@@ -29,7 +29,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Option 1: Run the web app
+### Run the web app
 
 ```bash
 # Start the backend API
