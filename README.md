@@ -40,7 +40,3 @@ uvicorn app:app --reload
 cd frontend
 streamlit run app.py
 ```
-
-## License
-
-MIT
