@@ -17,3 +17,5 @@ app.add_middleware(
 def recommend(query: str = Query(..., description="Job description or natural language query")):
     results = recommender.recommend(query)
     return {"results": results}
+
+
