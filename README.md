@@ -16,8 +16,8 @@ This tool helps you find the perfect SHL assessment for your hiring needs. Just 
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/shl-assessment-recommender.git
-cd shl-assessment-recommender
+git clone https://github.com/Himanshi2505/SHL.git
+cd SHL
 
 # Create a virtual environment (optional but recommended)
 python -m venv venv
