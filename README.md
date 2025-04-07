@@ -34,7 +34,7 @@ pip install -r requirements.txt
 ```bash
 # Start the backend API
 cd backend
-uvicorn app:app --reload
+uvicorn app:app --reload --port 8000
 
 # In a new terminal, start the frontend
 cd frontend
