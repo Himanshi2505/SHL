@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
-from recommender import SHLRecommender
+from backend.recommender import SHLRecommender
+
 
 app = FastAPI()
 recommender = SHLRecommender()
