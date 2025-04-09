@@ -1,7 +1,8 @@
 fastapi
 uvicorn
-streamlit
+tqdm
+numpy
+python-dotenv
 requests
 beautifulsoup4
-python-dotenv
-tqdm
+google-generativeai
