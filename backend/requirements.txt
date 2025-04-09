@@ -3,3 +3,4 @@ uvicorn
 streamlit
 requests
 beautifulsoup4
+python-dotenv
