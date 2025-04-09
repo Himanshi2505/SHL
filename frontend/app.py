@@ -8,7 +8,7 @@ query = st.text_area("Enter job description or query")
 if st.button("Get Recommendations"):
     if query:
         with st.spinner("Fetching assessments..."):
-            response = requests.post("https://shl-1-liu0.onrender.com/recommend", params={"query": query})
+            response = requests.post("https://shl-1-liu0.onrender.com/recommend", json={"query": query})
             results = response.json()["results"]
 
             if results:
