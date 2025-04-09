@@ -1,10 +1,16 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from recommender import SHLRecommender
+
+
+class RecommendRequest(BaseModel):
+    query: str
 
 
 app = FastAPI()
 recommender = SHLRecommender()
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -14,9 +20,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/api/recommend")
-def recommend(query: str = Query(..., description="Job description or natural language query")):
-    results = recommender.recommend(query)
+
+@app.get("/health")
+def health_check():
+    return {"status": "healthy"}
+
+
+@app.post("/recommend")
+def recommend(request: RecommendRequest):
+    results = recommender.recommend(request.query)
     return {"results": results}
-
-

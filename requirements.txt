@@ -1,8 +1,0 @@
-fastapi
-uvicorn
-streamlit
-sentence-transformers==2.2.2
-transformers==4.30.2
-huggingface-hub==0.14.1
-requests
-beautifulsoup4

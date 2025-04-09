@@ -1,0 +1,19 @@
+# Core libraries
+fastapi
+uvicorn[standard]
+
+# Streamlit app
+streamlit
+
+# HTTP requests
+requests
+
+# For embedding and numpy usage
+google-generativeai
+python-dotenv
+numpy
+tqdm
+
+# For scraping (used in SHLScraper)
+beautifulsoup4
+lxml
